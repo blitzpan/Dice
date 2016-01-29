@@ -13,27 +13,33 @@
 .one{
     float:left;
     width:100px;
-    background:gray;
+    //background:gray;
 }
 .dice{
     width:100px;
     height:100px;
     margin:0 auto
 }
+.stop{
+    width:100%;
+    height:100%;
+}
 </style>
 <script>
+var people = ['王尼玛','唐马儒','张全蛋','纸巾','pino','刘木子','阿香','王蜜桃','赵铁柱','李小花','岳宝宝'];
 var count = 5;
 var i = 0;
 var res = 1;
 var change;
 var stopA = [];
 var resA = [];
+var stopC = 0;
 $(function(){
 	$("#makeCount").click(function(){
         $("#initDiv").hide(500);
         count = $("#count").val();
 		for(i=0;i<count;i++){
-			$("#container").append("<div class='one'><div calss='dice'><img id='diceImg"+i+"'  src='./img/dice_1.png'/></div><div><button onclick='stop("+i+")'>停止</button></div></div>");
+			$("#container").append("<div class='one'><div><center><b>"+people[i]+"</b></center></div><div calss='dice'><img id='diceImg"+i+"'  src='./img/dice_1.png'/></div><div><button class='stop' onclick='stop("+i+")'>停止</button></div></div>");
 		}
         operAll(0);
 	});
@@ -57,7 +63,6 @@ function operAll(opt){
 function changeFun(){
     for(i=0;i<count;i++){
         if(stopA[i]==1){
-            //$("#diceImg1").attr("src","./img/dice_action_2.png");
             $("#diceImg"+i).attr("src","./img/dice_action_"+Math.floor(Math.random()*4)+".png");
         }
     }
@@ -67,6 +72,10 @@ function stop(id){
     res = Math.floor(Math.random()*6 + 1);
     resA[id]=res;
     $("#diceImg"+id).attr("src","./img/dice_"+res+".png");
+    stopC = stopC+1;
+    if(stopC==count){
+        alert('all stop');
+    }
     //self.clearInterval(change);
 }
 </script>
@@ -80,6 +89,14 @@ function stop(id){
         <div>
             <button id="begin">开始</button>
         </div>
+        
+        <div class='one'>
+            
+            <div><center><b>叶良辰</b></center></div>
+            <div calss='dice'><img id='diceImg"+i+"'  src='./img/dice_1.png'/></div>
+            <div><button onclick='stop(1)'>停止</button></div>
+        </div>
+        
     </div>
 </body>
 </html>
