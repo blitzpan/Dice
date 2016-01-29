@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play</title>
+    <script src="./js/jquery-1.9.1.min.js"></script>
+</head>
+<style>
+#container{
+    margin:0 auto;
+    //background:gray 
+}
+.one{
+    float:left;
+    width:100px;
+    background:gray;
+}
+.dice{
+    width:100px;
+    height:100px;
+    margin:0 auto
+}
+</style>
+<script>
+var i = 0;
+var res = 1;
+var change;
+$(function(){
+	$("#makeCount").click(function(){
+		for(i=0;i<5;i++){
+			$("#container").append("<div class='one'><div calss='dice'><img id='diceImg'+i src='./img/dice_1.png'/></div><div><button id='begin'+i>开始</button></div></div>");
+		}
+	});
+    $("#begin1").click(function(){
+        change = self.setInterval("changeFun()",20);
+        setTimeout("stop()",2000);
+    });
+});
+function changeFun(){
+    $("#diceImg").attr("src","./img/dice_action_"+i+".png");
+    i = i+1;
+    if(i==4){
+        i=0;
+    }
+}   
+function stop(){
+    res = Math.floor(Math.random()*6 + 1);
+    self.clearInterval(change);
+    $("#diceImg").attr("src","./img/dice_"+res+".png");
+}
+</script>
+<body>
+	<div>
+		<input type="text" id="count"/> 
+		<button id="makeCount">确定</button>
+	</div>
+    <div id="container">
+        <div class="one">
+            <div calss="dice">
+                <img id="diceImg1" src="./img/dice_1.png"/>
+            </div>
+            <div>
+                <button id="begin1">开始</button>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

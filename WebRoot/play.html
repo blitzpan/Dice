@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play</title>
+    <script src="./js/jquery-1.9.1.min.js"></script>
+</head>
+<style>
+#container{
+    margin:0 auto;
+    //background:gray 
+}
+.one{
+    float:left;
+    width:100px;
+    background:gray;
+}
+.dice{
+    width:100px;
+    height:100px;
+    margin:0 auto
+}
+</style>
+<script>
+var count = 5;
+var i = 0;
+var res = 1;
+var change;
+var stopA = [];
+var resA = [];
+$(function(){
+	$("#makeCount").click(function(){
+        $("#initDiv").hide(500);
+        count = $("#count").val();
+		for(i=0;i<count;i++){
+			$("#container").append("<div class='one'><div calss='dice'><img id='diceImg"+i+"'  src='./img/dice_1.png'/></div><div><button onclick='stop("+i+")'>停止</button></div></div>");
+		}
+        operAll(0);
+	});
+    $("#begin").click(function(){
+        change = self.setInterval("changeFun()",20);
+        operAll(1);
+        //setTimeout("stop()",2000);
+    });
+});
+//opt=0 stop;1 start
+function operAll(opt){
+    for(i=0;i<count;i++){
+        stopA[i]=opt;
+    }
+    if(opt==1){
+        for(i=0;i<count;i++){
+            resA[i]=0;
+        }
+    }
+}
+function changeFun(){
+    for(i=0;i<count;i++){
+        if(stopA[i]==1){
+            //$("#diceImg1").attr("src","./img/dice_action_2.png");
+            $("#diceImg"+i).attr("src","./img/dice_action_"+Math.floor(Math.random()*4)+".png");
+        }
+    }
+}   
+function stop(id){
+    stopA[id]=0;
+    res = Math.floor(Math.random()*6 + 1);
+    resA[id]=res;
+    $("#diceImg"+id).attr("src","./img/dice_"+res+".png");
+    //self.clearInterval(change);
+}
+</script>
+<body>
+	<div id="initDiv">
+		玩家数量
+        <input type="number" id="count" min=1 max=10 value=2 />
+		<button id="makeCount">确定</button>
+	</div>
+    <div id="container">
+        <div>
+            <button id="begin">开始</button>
+        </div>
+    </div>
+</body>
+</html>
